@@ -1,0 +1,21 @@
+[tool.poetry]
+name = "urdf-test"
+version = "0.1.0"
+description = ""
+authors = ["Your Name <you@example.com>"]
+readme = "README.md"
+packages = [{include = "urdf_test"}]
+
+[tool.poetry.dependencies]
+python = "^3.11"
+yourdfpy = "^0.0.53"
+pyglet = "1.5.27"
+glu = "^0.0.18"
+urchin = "^0.0.27"
+pyrender = "^0.1.45"
+jupyter = "^1.0.0"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
