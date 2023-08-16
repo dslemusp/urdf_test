@@ -1,0 +1,134 @@
+name: CI
+
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+
+env:
+  WORKSPACE: ${{ github.workspace }}
+  PYTHON_VERSION: 3.10.12
+
+jobs:
+  # Windows:
+  #   name: Windows
+  #   runs-on: windows-latest
+  #   steps:
+
+  #     - name: Checkout
+  #       uses: actions/checkout@v3
+  #       with:
+  #         lfs: true
+  #         submodules: 'recursive'
+  #         token: ${{ secrets.CI_PAT }}
+
+  #     - name: Configure pwsh
+  #       run : Set-ExecutionPolicy Unrestricted
+
+  #     - name: Install VC++ Build Tools
+  #       run: |
+  #         Invoke-WebRequest -Uri https://aka.ms/vs/17/release/vs_buildtools.exe -OutFile vs_buildtools.exe
+  #         .\vs_buildtools.exe --quiet --wait --norestart --nocache `
+  #           --add Microsoft.VisualStudio.Workload.VCTools `
+  #           --add Microsoft.VisualStudio.Component.Windows10SDK `
+  #           --add Microsoft.VisualStudio.Component.VC.140 `
+  #           --add Microsoft.VisualStudio.Component.VC.ATLMFC `
+  #           --add Microsoft.VisualStudio.Component.VC.Tools.x86.x64 `
+  #           --add Microsoft.VisualStudio.Component.Windows10SDK.18362 `
+  #           --add Microsoft.VisualStudio.Component.VC.Redist.14.Latest
+
+  #     - name: Install poetry
+  #       run: |
+  #         (Invoke-WebRequest -Uri https://install.python-poetry.org -UseBasicParsing).Content | py - --version 1.4.0
+  #         & "$env:APPDATA\Python\Scripts\poetry" --version
+        
+  #     # Necessary to pull in dependencies specified as github repositories.
+  #     - name: Authenticate with github.com
+  #       run: |
+  #         git config --global credential.helper store
+  #         git config --global --add "url.https://github.com/.insteadOf" "git@github.com:"
+  #         echo "${{ secrets.CI_GIT_CREDENTIALS }}" >> ~/.git-credentials
+  #     # # Necessary to pull in dependencies from our private Python repository.
+  #     - name: Authenticate poetry with cloudsmith.com
+  #       run: |
+  #         & "$env:APPDATA\Python\Scripts\poetry" config -- http-basic.rocsys token "${{ secrets.CI_ROCSYS_CLOUDSMITH }}"
+
+  #     - name: Install dependencies
+  #       run: |
+  #         & "$env:APPDATA\Python\Scripts\poetry" cache clear --all
+  #         & "$env:APPDATA\Python\Scripts\poetry" install
+
+  #     - name: Lint and format
+  #       run: | 
+  #         & "$env:APPDATA\Python\Scripts\poetry" run flake8
+  MacOS:
+    name: MacOS
+    runs-on: macos-13
+      
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+        with:
+          lfs: true
+          submodules: 'recursive'
+          token: ${{ secrets.CI_PAT }}
+
+      - name: Setup Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: ${{ env.PYTHON_VERSION }}
+
+      - name: Install and configure Poetry
+        uses: snok/install-poetry@v1
+        with:
+          version: 1.5.1
+          installer-parallel: true
+
+      # Necessary to pull in dependencies specified as github repositories.
+      - name: Authenticate with github.com
+        run: |
+          git config --global credential.helper store
+          git config --global --add "url.https://github.com/.insteadOf" "git@github.com:"
+          echo "${{ secrets.CI_GIT_CREDENTIALS }}" >> ~/.git-credentials
+
+      - name: Install dependencies
+        run: poetry install
+
+      - name: Lint and format
+        run: poetry run flake8
+
+  Linux:
+    name: Linux
+    runs-on: ubuntu-latest
+      
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+        with:
+          lfs: true
+          submodules: 'recursive'
+          token: ${{ secrets.CI_PAT }}
+
+      - name: Setup Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: ${{ env.PYTHON_VERSION }}
+
+      - name: Install and configure Poetry
+        uses: snok/install-poetry@v1
+        with:
+          version: 1.5.1
+          installer-parallel: true
+
+      # Necessary to pull in dependencies specified as github repositories.
+      - name: Authenticate with github.com
+        run: |
+          git config --global credential.helper store
+          git config --global --add "url.https://github.com/.insteadOf" "git@github.com:"
+          echo "${{ secrets.CI_GIT_CREDENTIALS }}" >> ~/.git-credentials
+
+      - name: Install dependencies
+        run: poetry install
+
+      - name: Lint and format
+        run: poetry run flake8

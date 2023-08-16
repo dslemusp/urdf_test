@@ -7,15 +7,25 @@ readme = "README.md"
 packages = [{include = "urdf_test"}]
 
 [tool.poetry.dependencies]
-python = "^3.11"
-yourdfpy = "^0.0.53"
+python = "^3.10"
+# yourdfpy = "^0.0.53"
 pyglet = "1.5.27"
 glu = "^0.0.18"
-urchin = "^0.0.27"
+# urchin = "^0.0.27"
 pyrender = "^0.1.45"
-jupyter = "^1.0.0"
-
+# jupyter = "^1.0.0"
+# embreex = { version = "2.17.7.post1", source = "pypi_" }
+urchin = "^0.0.27"
 
 [build-system]
 requires = ["poetry-core"]
 build-backend = "poetry.core.masonry.api"
+
+# [[tool.poetry.source]]
+# name = "xxx"
+# url = "https://mirrors.aliyun.com/pypi/simple/"
+# priority = 'default'
+# [[tool.poetry.source]]
+# name = 'pypi_'  # needed until python-poetry/poetry#3456 is resolved.
+# url = 'https://pypi.org/simple'
+# secondary = true
