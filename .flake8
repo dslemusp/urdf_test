@@ -1,0 +1,8 @@
+[flake8]
+max-line-length = 120
+ignore = E203,W503,T400,T499
+require-plugins = flake8-isort,flake8-black
+exclude = 
+    .venv,
+    __pycache__
+mypy_config = pyproject.toml
