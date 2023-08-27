@@ -14,6 +14,8 @@ urchin = "^0.0.27"
 loguru = "^0.7.0"
 types-six = "^1.16.21.9"
 pyrender = {git = "git@github.com:mmatl/pyrender.git", rev = "master"}
+ipython = "^8.14.0"
+pydantic = "^2.3.0"
 
 [tool.poetry.group.dev.dependencies]
 mypy = "^1.5.0"
