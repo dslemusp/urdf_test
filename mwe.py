@@ -22,7 +22,9 @@ def my_thread() -> None:
 
             viewer.render_lock.acquire()
 
-            fk = robot.visual_trimesh_fk(cfg={"shoulder_lift_joint": -2.0 * (1 - count*0.01), "elbow_joint": count * 0.01})
+            fk = robot.visual_trimesh_fk(
+                cfg={"shoulder_lift_joint": -2.0 * (1 - count * 0.01), "elbow_joint": count * 0.01}
+            )
             for tm, node in zip(fk, nodes):
                 pose = fk[tm]
                 scene.set_pose(node, pose)
@@ -34,6 +36,7 @@ def my_thread() -> None:
         except KeyboardInterrupt:
             logger.info("Exiting")
             break
+
 
 def createRunViewer() -> None:
     global viewer

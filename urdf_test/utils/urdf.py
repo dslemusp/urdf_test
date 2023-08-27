@@ -5,6 +5,7 @@ from lxml import etree as ET
 from urchin import URDF as URDF_base
 from typing_extensions import Any
 
+
 class URDFLocal(URDF_base):
     def __init__(self, *args, **kwargs) -> None:
         super().__init__(*args, **kwargs)
@@ -59,7 +60,7 @@ class URDFLocal(URDF_base):
         kwargs["other_xml"] = data
         return URDFLocal(**kwargs)
 
-    def show(self, cfg: Any | None = None, use_collision: bool=False) -> pyrender.Scene:
+    def show(self, cfg: Any | None = None, use_collision: bool = False) -> pyrender.Scene:
         """Visualize the URDF in a given configuration.
 
         Parameters
